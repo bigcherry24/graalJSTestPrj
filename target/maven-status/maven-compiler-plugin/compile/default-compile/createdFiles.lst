@@ -1,4 +1,5 @@
+com/example/graaljsdemo/service/GraalJsExecutorService$AppBridge.class
+com/example/graaljsdemo/web/ScriptForm.class
 com/example/graaljsdemo/GraalJsWebDemoApplication.class
 com/example/graaljsdemo/web/GraalJsController.class
-com/example/graaljsdemo/web/ScriptForm.class
 com/example/graaljsdemo/service/GraalJsExecutorService.class

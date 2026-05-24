@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class GraalJsController {
 
-    private static final String SAMPLE_SCRIPT = "const a = 5; const b = 7; a * b;";
+    private static final String SAMPLE_SCRIPT = String.join("\n",
+            "const hi = app.sayHello('GraalJS');",
+            "const sum = app.calc(10, 32);",
+            "`${hi} result=${sum}`;"
+    );
 
     private final GraalJsExecutorService graalJsExecutorService;
 

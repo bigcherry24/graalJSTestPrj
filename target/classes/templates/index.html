@@ -153,7 +153,7 @@
                 <p class="error" th:if="${#fields.hasErrors('script')}" th:errors="*{script}"></p>
                 <div class="actions">
                     <button type="submit">실행</button>
-                    <span class="hint">예시: const arr = [1,2,3]; arr.map(n => n * 10).join(', ');</span>
+                    <span class="hint">허용 API: app.sayHello(name), app.calc(a, b)</span>
                 </div>
             </form>
             <section>
