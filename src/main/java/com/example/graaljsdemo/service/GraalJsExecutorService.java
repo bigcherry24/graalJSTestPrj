@@ -1,5 +1,6 @@
 package com.example.graaljsdemo.service;
 
+import java.util.Arrays;
 import java.util.List;
 import javax.script.Bindings;
 import javax.script.ScriptContext;
@@ -79,5 +80,51 @@ public class GraalJsExecutorService {
         } catch (ScriptException e) {
             return "Execution Error: " + e.getMessage();
         }
+    }
+
+    public String benchmark(String script, int iterations) {
+        if (iterations <= 0) {
+            return "iterations must be greater than 0";
+        }
+
+        long[] contextTimes = measure(script, iterations, true);
+        long[] scriptEngineTimes = measure(script, iterations, false);
+
+        return String.join("\n",
+                "Benchmark (iterations=" + iterations + ")",
+                formatStats("Context", contextTimes),
+                formatStats("ScriptEngine", scriptEngineTimes));
+    }
+
+    private long[] measure(String script, int iterations, boolean contextMode) {
+        long[] times = new long[iterations];
+        for (int i = 0; i < iterations; i++) {
+            long start = System.nanoTime();
+            if (contextMode) {
+                executeWithContext(script);
+            } else {
+                executeWithScriptEngine(script);
+            }
+            times[i] = System.nanoTime() - start;
+        }
+        return times;
+    }
+
+    private String formatStats(String label, long[] times) {
+        long total = 0L;
+        for (long time : times) {
+            total += time;
+        }
+
+        long[] sorted = Arrays.copyOf(times, times.length);
+        Arrays.sort(sorted);
+        int p95Index = (int) Math.ceil(sorted.length * 0.95) - 1;
+        if (p95Index < 0) {
+            p95Index = 0;
+        }
+        double avgMs = (double) total / sorted.length / 1_000_000.0;
+        double p95Ms = (double) sorted[p95Index] / 1_000_000.0;
+
+        return String.format("%s avg=%.3fms p95=%.3fms", label, avgMs, p95Ms);
     }
 }

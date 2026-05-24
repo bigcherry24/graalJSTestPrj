@@ -32,6 +32,7 @@ public class GraalJsController {
         form.setExecutionMode("context");
         model.addAttribute("scriptForm", form);
         model.addAttribute("result", "");
+        model.addAttribute("benchmarkResult", "");
         return "index";
     }
 
@@ -43,11 +44,34 @@ public class GraalJsController {
     ) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("result", "");
+            model.addAttribute("benchmarkResult", "");
             return "index";
         }
 
         String result = graalJsExecutorService.execute(scriptForm.getScript(), scriptForm.getExecutionMode());
         model.addAttribute("result", result);
+        model.addAttribute("benchmarkResult", "");
+        model.addAttribute("scriptForm", scriptForm);
+        return "index";
+    }
+
+    @PostMapping("/benchmark")
+    public String benchmark(
+            @Valid ScriptForm scriptForm,
+            BindingResult bindingResult,
+            Model model
+    ) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("result", "");
+            model.addAttribute("benchmarkResult", "");
+            return "index";
+        }
+
+        String benchmarkResult = graalJsExecutorService.benchmark(
+                scriptForm.getScript(),
+                scriptForm.getBenchmarkIterations());
+        model.addAttribute("result", "");
+        model.addAttribute("benchmarkResult", benchmarkResult);
         model.addAttribute("scriptForm", scriptForm);
         return "index";
     }

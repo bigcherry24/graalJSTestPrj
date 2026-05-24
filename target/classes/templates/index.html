@@ -89,6 +89,7 @@
             display: flex;
             gap: 10px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .mode-row {
@@ -105,6 +106,22 @@
             gap: 6px;
             font-size: 0.95rem;
             color: #0f172a;
+        }
+
+        .iter-input {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #0f172a;
+            font-size: 0.95rem;
+        }
+
+        .iter-input input {
+            width: 110px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 6px 8px;
+            font-size: 0.95rem;
         }
 
         button {
@@ -180,12 +197,22 @@
                 </div>
                 <div class="actions">
                     <button type="submit">실행</button>
+                    <button type="submit" th:formaction="@{/benchmark}">벤치 실행 (Context vs ScriptEngine)</button>
+                    <label class="iter-input">
+                        반복 횟수
+                        <input type="number" th:field="*{benchmarkIterations}" min="1" max="10000">
+                    </label>
                     <span class="hint">허용 API: app.sayHello(name), app.calc(a, b), math.add(a, b), math.multiply(a, b), userApi.currentUserName(), userApi.welcome(name)</span>
                 </div>
+                <p class="error" th:if="${#fields.hasErrors('benchmarkIterations')}" th:errors="*{benchmarkIterations}"></p>
             </form>
             <section>
                 <h2>실행 결과</h2>
                 <div class="result" th:text="${result}"></div>
+            </section>
+            <section>
+                <h2>벤치 결과</h2>
+                <div class="result" th:text="${benchmarkResult}"></div>
             </section>
         </main>
     </section>
