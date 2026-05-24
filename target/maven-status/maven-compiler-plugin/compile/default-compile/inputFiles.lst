@@ -1,6 +1,8 @@
 /workspaces/codespaces-blank/src/main/java/com/example/graaljsdemo/service/JsBridge.java
 /workspaces/codespaces-blank/src/main/java/com/example/graaljsdemo/service/GraalJsExecutorService.java
+/workspaces/codespaces-blank/src/main/java/com/example/graaljsdemo/service/MathBridge.java
 /workspaces/codespaces-blank/src/main/java/com/example/graaljsdemo/service/AppBridge.java
 /workspaces/codespaces-blank/src/main/java/com/example/graaljsdemo/GraalJsWebDemoApplication.java
 /workspaces/codespaces-blank/src/main/java/com/example/graaljsdemo/web/GraalJsController.java
+/workspaces/codespaces-blank/src/main/java/com/example/graaljsdemo/service/UserApiBridge.java
 /workspaces/codespaces-blank/src/main/java/com/example/graaljsdemo/web/ScriptForm.java

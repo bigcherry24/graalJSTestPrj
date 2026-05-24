@@ -30,21 +30,26 @@ mvn spring-boot:run
 
 1. 화면 textarea에 JavaScript 코드 입력
 2. 실행 버튼 클릭
-3. 서버의 GraalJS 엔진이 코드를 평가 (`app` 객체만 바인딩)
+3. 서버의 GraalJS 엔진이 코드를 평가 (`app`, `math`, `userApi` 브리지 바인딩)
 4. 결과를 화면에 렌더링
 
 ## 노출 API 정책
 
-- JS에서 사용할 수 있는 Java 브리지 객체는 `app` 1개만 노출
-- 허용 메서드: `app.sayHello(name)`, `app.calc(a, b)`
+- JS에서 사용할 수 있는 Java 브리지 객체는 `app`, `math`, `userApi`만 노출
+- 허용 메서드:
+- `app.sayHello(name)`, `app.calc(a, b)`
+- `math.add(a, b)`, `math.multiply(a, b)`
+- `userApi.currentUserName()`, `userApi.welcome(name)`
 - `Java.type(...)` 같은 Host class 접근은 차단
 
 ## 예시 스크립트
 
 ```javascript
 const hi = app.sayHello("GraalJS");
-const sum = app.calc(10, 32);
-hi + " result=" + sum;
+const sum = math.add(10, 32);
+const area = math.multiply(6, 7);
+const welcome = userApi.welcome(userApi.currentUserName());
+hi + " sum=" + sum + " area=" + area + " " + welcome;
 ```
 
 ## 주의

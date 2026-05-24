@@ -153,7 +153,7 @@
                 <p class="error" th:if="${#fields.hasErrors('script')}" th:errors="*{script}"></p>
                 <div class="actions">
                     <button type="submit">실행</button>
-                    <span class="hint">허용 API: app.sayHello(name), app.calc(a, b)</span>
+                    <span class="hint">허용 API: app.sayHello(name), app.calc(a, b), math.add(a, b), math.multiply(a, b), userApi.currentUserName(), userApi.welcome(name)</span>
                 </div>
             </form>
             <section>

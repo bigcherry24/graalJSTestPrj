@@ -13,8 +13,10 @@ public class GraalJsController {
 
     private static final String SAMPLE_SCRIPT = String.join("\n",
             "const hi = app.sayHello('GraalJS');",
-            "const sum = app.calc(10, 32);",
-            "`${hi} result=${sum}`;"
+            "const sum = math.add(10, 32);",
+            "const area = math.multiply(6, 7);",
+            "const welcome = userApi.welcome(userApi.currentUserName());",
+            "`${hi} sum=${sum} area=${area} ${welcome}`;"
     );
 
     private final GraalJsExecutorService graalJsExecutorService;
