@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GraalJS Runner</title>
+    <style>
+        :root {
+            --bg: #f7f6f2;
+            --panel: #ffffff;
+            --ink: #1f2937;
+            --accent: #0f766e;
+            --accent-2: #164e63;
+            --muted: #64748b;
+            --border: #dbe2ea;
+            --danger: #b91c1c;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: "IBM Plex Sans KR", "Noto Sans KR", sans-serif;
+            background:
+                radial-gradient(circle at 15% 15%, #d8f3dc 0%, transparent 35%),
+                radial-gradient(circle at 80% 10%, #bee3f8 0%, transparent 32%),
+                var(--bg);
+            color: var(--ink);
+            min-height: 100vh;
+        }
+
+        .page {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: 0 14px 40px rgba(15, 23, 42, 0.08);
+            overflow: hidden;
+            animation: rise 420ms ease-out;
+        }
+
+        .card-header {
+            padding: 24px;
+            background: linear-gradient(100deg, var(--accent), var(--accent-2));
+            color: #fff;
+        }
+
+        .card-header h1 {
+            margin: 0;
+            font-size: 1.65rem;
+        }
+
+        .card-header p {
+            margin: 8px 0 0;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .card-body {
+            padding: 24px;
+            display: grid;
+            gap: 16px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 280px;
+            resize: vertical;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+            font-family: "IBM Plex Mono", "Consolas", monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            background: #fbfdff;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.18);
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        button {
+            border: 0;
+            padding: 11px 18px;
+            border-radius: 999px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 120ms ease, opacity 120ms ease;
+        }
+
+        button:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+        }
+
+        .hint {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .error {
+            color: var(--danger);
+            font-size: 0.92rem;
+        }
+
+        .result {
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            padding: 14px;
+            background: #f8fafc;
+            font-family: "IBM Plex Mono", "Consolas", monospace;
+            white-space: pre-wrap;
+            word-break: break-word;
+            min-height: 60px;
+        }
+
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 640px) {
+            .page { padding: 18px 14px; }
+            .card-header h1 { font-size: 1.35rem; }
+            textarea { min-height: 220px; }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <section class="card">
+        <header class="card-header">
+            <h1>GraalJS JavaScript Runner</h1>
+            <p>Textarea 입력 코드를 서버에서 GraalJS로 실행해 결과를 출력합니다.</p>
+        </header>
+        <main class="card-body">
+            <form th:action="@{/execute}" method="post" th:object="${scriptForm}">
+                <textarea th:field="*{script}" spellcheck="false"></textarea>
+                <p class="error" th:if="${#fields.hasErrors('script')}" th:errors="*{script}"></p>
+                <div class="actions">
+                    <button type="submit">실행</button>
+                    <span class="hint">예시: const arr = [1,2,3]; arr.map(n => n * 10).join(', ');</span>
+                </div>
+            </form>
+            <section>
+                <h2>실행 결과</h2>
+                <div class="result" th:text="${result}"></div>
+            </section>
+        </main>
+    </section>
+</div>
+</body>
+</html>
