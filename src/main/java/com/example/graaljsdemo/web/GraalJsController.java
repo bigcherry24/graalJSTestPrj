@@ -29,6 +29,7 @@ public class GraalJsController {
     public String home(Model model) {
         ScriptForm form = new ScriptForm();
         form.setScript(SAMPLE_SCRIPT);
+        form.setExecutionMode("context");
         model.addAttribute("scriptForm", form);
         model.addAttribute("result", "");
         return "index";
@@ -45,7 +46,7 @@ public class GraalJsController {
             return "index";
         }
 
-        String result = graalJsExecutorService.execute(scriptForm.getScript());
+        String result = graalJsExecutorService.execute(scriptForm.getScript(), scriptForm.getExecutionMode());
         model.addAttribute("result", result);
         model.addAttribute("scriptForm", scriptForm);
         return "index";

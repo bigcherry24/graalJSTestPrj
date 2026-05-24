@@ -91,6 +91,22 @@
             align-items: center;
         }
 
+        .mode-row {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+            color: var(--ink);
+        }
+
+        .mode-option {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.95rem;
+            color: #0f172a;
+        }
+
         button {
             border: 0;
             padding: 11px 18px;
@@ -151,6 +167,17 @@
             <form th:action="@{/execute}" method="post" th:object="${scriptForm}">
                 <textarea th:field="*{script}" spellcheck="false"></textarea>
                 <p class="error" th:if="${#fields.hasErrors('script')}" th:errors="*{script}"></p>
+                <div class="mode-row">
+                    <strong>실행 방식</strong>
+                    <label class="mode-option">
+                        <input type="radio" th:field="*{executionMode}" value="context">
+                        Context (Polyglot API)
+                    </label>
+                    <label class="mode-option">
+                        <input type="radio" th:field="*{executionMode}" value="scriptengine">
+                        ScriptEngine (JSR-223)
+                    </label>
+                </div>
                 <div class="actions">
                     <button type="submit">실행</button>
                     <span class="hint">허용 API: app.sayHello(name), app.calc(a, b), math.add(a, b), math.multiply(a, b), userApi.currentUserName(), userApi.welcome(name)</span>
